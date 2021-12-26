@@ -4,9 +4,12 @@
   "description": "",
   "license": "",
   "scripts": {
-    "build": "remix build",
     "dev": "cross-env NODE_ENV=development netlify dev",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "build": "npm run build:css && remix build",
+    "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --minify",
+    "develop": "concurrently \"npm run dev:css\" \"remix dev\"",
+    "dev:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --watch"
   },
   "dependencies": {
     "@remix-run/react": "^1.1.1",
@@ -20,8 +23,11 @@
     "@remix-run/dev": "^1.1.1",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
-    "typescript": "^4.1.2",
-    "cross-env": "^7.0.3"
+    "@typescript/lib-dom": "npm:@types/web@0.0.48",
+    "concurrently": "^6.5.1",
+    "cross-env": "^7.0.3",
+    "tailwindcss": "^3.0.7",
+    "typescript": "^4.1.2"
   },
   "engines": {
     "node": ">=14"
